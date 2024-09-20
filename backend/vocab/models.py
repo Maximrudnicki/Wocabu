@@ -15,5 +15,8 @@ class Word(models.Model):
     constructor = models.BooleanField(default=False)
     word_audio = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return f"<Word(id={self.id}, word={self.word}, definition={self.definition}, user_id={self.user.id}>"

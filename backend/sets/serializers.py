@@ -3,23 +3,48 @@ from rest_framework import serializers
 from .models import WordSet
 
 
-class SetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WordSet
-
-        fields = ("id", "name", "created_at", "words")
+class SetSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    name = serializers.CharField(max_length=255)
+    created_at = serializers.DateTimeField(read_only=True)
+    words = serializers.ListField(child=serializers.IntegerField(), default=list)
 
     def create(self, validated_data):
-        validated_data["user_id"] = self.context["request"].user_id
-        return super().create(validated_data)
+        validated_data["user_id"] = self.context["request"].user.id
+        word_set = WordSet(**validated_data)
+
+        word_set_repository = self.context["word_set_repository"]
+        return word_set_repository.create_word_set(
+            word_set.name, word_set.user_id, word_set.words
+        )
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get("name", instance.name)
+        instance.words = validated_data.get("words", instance.words)
+
+        word_set_repository = self.context["word_set_repository"]
+        word_set_repository.update_word_set(instance.id, instance.to_dict())
+        return instance
+    
+    # class Meta:
+    #     fields = ("id", "name", "created_at", "words")
 
 
-class CreateSetSerializer(serializers.ModelSerializer):
+class CreateSetSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=255)
+
+    def create(self, validated_data):
+        validated_data["user_id"] = self.context["request"].user.id
+        word_set = WordSet(
+            name=validated_data["name"], user_id=validated_data["user_id"]
+        )
+
+        word_set_repository = self.context["word_set_repository"]
+        return word_set_repository.create_word_set(word_set.name, word_set.user_id)
+
     class Meta:
-        model = WordSet
-
         fields = ("name")
 
-    def create(self, validated_data):
-        validated_data["user_id"] = self.context["request"].user_id
-        return super().create(validated_data)
+    # def create(self, validated_data):
+    #     validated_data["user"] = self.context["request"].user
+    #     return super().create(validated_data)
