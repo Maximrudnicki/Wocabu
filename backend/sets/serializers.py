@@ -4,7 +4,7 @@ from .models import WordSet
 
 
 class SetSerializer(serializers.Serializer):
-    id = serializers.CharField(read_only=True)
+    _id = serializers.CharField(read_only=True)
     name = serializers.CharField(max_length=255)
     created_at = serializers.DateTimeField(read_only=True)
     words = serializers.ListField(child=serializers.IntegerField(), default=list)
@@ -26,8 +26,6 @@ class SetSerializer(serializers.Serializer):
         word_set_repository.update_word_set(instance.id, instance.to_dict())
         return instance
     
-    # class Meta:
-    #     fields = ("id", "name", "created_at", "words")
 
 
 class CreateSetSerializer(serializers.Serializer):
