@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default createStore({
   state: {
+    language: "en-GB",
     words: [],
     teacherGroups: [],
     studentGroups: [],
@@ -33,6 +34,9 @@ export default createStore({
     },
     setIsLoading(state, status) {
       state.isLoading = status;
+    },
+    setLanguage(state, language) {
+      state.language = language;
     },
     setToken(state, token) {
       state.token = token;
@@ -105,83 +109,6 @@ export default createStore({
         console.error(error);
       }
     },
-    async fetchStats({ commit }, formData) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.post("/api/v1/group/get_statistics", formData, config);
-        response.data.words.sort((a, b) => {
-          return b.created_at.seconds - a.created_at.seconds;
-        });        
-        return response.data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async fetchTeacherGroups({ commit }) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.get("/api/v1/group/find_teacher/", config);    
-        commit("setTeacherGroups", response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async fetchStudentGroups({ commit }) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.get("/api/v1/group/find_student/", config);    
-        commit("setStudentGroups", response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async fetchGroup({ commit }, formData) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.post("/api/v1/group/find/", formData, config);    
-        commit("setGroup", response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async findStudent({ commit }, formData) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.post("/api/v1/group/find_student_info/", formData, config);    
-        commit("setStudent", response.data);
-        return response.data
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async findTeacher({ commit }, formData) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.post("/api/v1/group/find_teacher_info/", formData, config);    
-        commit("setTeacher", response.data);
-        return response.data
-      } catch (error) {
-        console.error(error);
-      }
-    },
     async addWord({ commit }, formData) {
       try {
         const token = localStorage.getItem("token");
@@ -195,43 +122,6 @@ export default createStore({
         console.error(error);
       }
     },
-    async addWordToStudent({ commit }, formData) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        await axios.post("/api/v1/group/add_word/", formData, config);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async addGroup({ commit }, formData) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.post("/api/v1/group/", formData, config);
-        const newGroup = response.data;
-        commit("addGroup", newGroup);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async addToGroup({ commit }, formData) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.post("/api/v1/group/add/", formData, config);
-        const newGroup = response.data;
-        commit("addToGroup", newGroup);
-      } catch (error) {
-        console.error(error);
-      }
-    },
     async deleteWord({ commit }, wordId) {
       try {
         const token = localStorage.getItem("token");
@@ -240,18 +130,6 @@ export default createStore({
         };
         await axios.delete(`/api/v1/vocab/${wordId}`, config);
         commit("deleteWord", wordId);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async deleteGroup({ commit }, groupId) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        await axios.delete(`/api/v1/group/${groupId}`, config);
-        commit("deleteGroup", groupId);
       } catch (error) {
         console.error(error);
       }

@@ -143,11 +143,10 @@ export default {
         };
         for (let i = 0; i < this.result.length; i++) {
           const formData = {
-            result: this.result[i].is_learned,
-            training: "constructor",
+            constructor: this.result[i].is_learned,
           };
           axios.patch(
-            `/api/v1/vocab/${this.result[i].word_id}/trainings`,
+            `/api/v1/vocab/${this.result[i].word_id}`,
             formData,
             config
           );

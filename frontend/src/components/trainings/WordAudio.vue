@@ -107,10 +107,10 @@ export default {
     playSound() {
       const synthesis = window.speechSynthesis;
       const voices = synthesis.getVoices();
-      const britishVoice = voices.find((voice) => voice.lang === "en-GB");
+      const selectedVoice = voices.find((voice) => voice.lang === "en-GB");
 
       const utterance = new SpeechSynthesisUtterance(this.currentWord.word);
-      utterance.voice = britishVoice;
+      utterance.voice = selectedVoice;
 
       synthesis.speak(utterance);
     },
@@ -133,11 +133,10 @@ export default {
         };
         for (let i = 0; i < this.result.length; i++) {
           const formData = {
-            result: this.result[i].is_learned,
-            training: "word_audio",
+            word_audio: this.result[i].is_learned,
           };
           axios.patch(
-            `/api/v1/vocab/${this.result[i].word_id}/trainings`,
+            `/api/v1/vocab/${this.result[i].word_id}`,
             formData,
             config
           );
