@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+from vocab.models import Word
 from .models import WordSet
 
 client = MongoClient("mongodb://localhost:27017/")
@@ -19,12 +20,24 @@ class WordSetRepository:
         return word_set
     
     def get_word_sets_by_user(self, user_id):
-        word_sets = self.collection.find({"user_id": user_id})
+        word_sets = list(self.collection.find({"user_id": user_id}))
+        for set in word_sets: # we need to replace words. Instead of ids we need to get real words
+            if set:
+                words = []
+                for word_id in set['words']:
+                    word = Word.objects.get(pk=word_id)
+                    words.append(word.to_dict())
+                set['words'] = words
         return [WordSet.from_dict(word_set) for word_set in word_sets]
 
     def get_word_set_by_id(self, word_set_id):
         word_set_data = self.collection.find_one({"_id": ObjectId(word_set_id)})
-        if word_set_data:
+        if word_set_data: # we need to replace words. Instead of ids we need to get real words
+            words = []
+            for word_id in word_set_data['words']:
+                word = Word.objects.get(pk=word_id)
+                words.append(word.to_dict())
+            word_set_data['words'] = words
             return WordSet.from_dict(word_set_data)
         return None
 

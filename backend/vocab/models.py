@@ -20,3 +20,17 @@ class Word(models.Model):
 
     def __str__(self):
         return f"<Word(id={self.id}, word={self.word}, definition={self.definition}, user_id={self.user.id}>"
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "word": self.word,
+            "definition": self.definition,
+            "user_id": self.user.id,
+            "created_at": self.created_at.isoformat(),
+            "is_learned": self.is_learned,
+            "cards": self.cards,
+            "word_translation": self.word_translation,
+            "constructor": self.constructor,
+            "word_audio": self.word_audio
+        }

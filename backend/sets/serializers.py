@@ -7,7 +7,7 @@ class SetSerializer(serializers.Serializer):
     _id = serializers.CharField(read_only=True)
     name = serializers.CharField(max_length=255)
     created_at = serializers.DateTimeField(read_only=True)
-    words = serializers.ListField(child=serializers.IntegerField(), default=list)
+    words = serializers.ListField(default=list)
 
     def create(self, validated_data):
         validated_data["user_id"] = self.context["request"].user.id
@@ -43,6 +43,3 @@ class CreateSetSerializer(serializers.Serializer):
     class Meta:
         fields = ("name")
 
-    # def create(self, validated_data):
-    #     validated_data["user"] = self.context["request"].user
-    #     return super().create(validated_data)
