@@ -1,7 +1,7 @@
 <template>
     <div class="modal" v-if="show" @click="$emit('cancel')">
       <div class="modal-content" @click.stop>
-        <p>Are you sure you want to delete this group?</p>
+        <p>Are you sure you want to delete this set?</p>
         <div class="actions">
           <button @click="$emit('delete')" class="action-button">OK</button>
           <button @click="$emit('cancel')" class="action-button">Cancel</button>
@@ -14,7 +14,7 @@
   export default {
     props: {
       show: Boolean,
-      groupId: Number,
+      setId: Number,
     },
   };
   </script>

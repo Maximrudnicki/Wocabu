@@ -1,10 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Words from '@/components/Words.vue'
-import Groups from '@/components/Groups.vue'
-import GroupDetails from '@/components/GroupDetails.vue'
-import StudentGroupDetails from '@/components/StudentGroupDetails.vue'
-import StudentDetails from '@/components/StudentDetails.vue'
-import StudentDetailsStudent from '@/components/StudentDetailsStudent.vue'
 import WordDetails from '@/components/modals/WordDetails.vue'
 import Training from '@/components/trainings/Training.vue'
 import AllTogether from '@/components/trainings/AllTogether.vue'
@@ -20,31 +15,6 @@ const routes = [
     path: '/',
     name: 'words',
     component: Words
-  },
-  {
-    path: '/groups',
-    name: 'groups',
-    component: Groups
-  },
-  {
-    path: '/groups/:id',
-    name: 'group-details',
-    component: GroupDetails
-  },
-  {
-    path: '/groups/student/:id',
-    name: 'student-group-details',
-    component: StudentGroupDetails
-  },
-  {
-    path: '/groups/:id/:student',
-    name: 'student-details',
-    component: StudentDetails
-  },
-  {
-    path: '/groups/student/:id/:student',
-    name: 'student-details-student',
-    component: StudentDetailsStudent
   },
   {
     path: '/words/:id',

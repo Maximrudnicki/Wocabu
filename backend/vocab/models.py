@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class Word(models.Model):
-    word = models.CharField(max_length=255, unique=True, db_index=True)
+    word = models.CharField(max_length=255, db_index=True)
     definition = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)

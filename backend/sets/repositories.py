@@ -21,7 +21,7 @@ class WordSetRepository:
     
     def get_word_sets_by_user(self, user_id):
         word_sets = list(self.collection.find({"user_id": user_id}))
-        for set in word_sets: # we need to replace words. Instead of ids we need to get real words
+        for set in word_sets: # we need to replace ids with words
             if set:
                 words = []
                 for word_id in set['words']:
@@ -32,7 +32,7 @@ class WordSetRepository:
 
     def get_word_set_by_id(self, word_set_id):
         word_set_data = self.collection.find_one({"_id": ObjectId(word_set_id)})
-        if word_set_data: # we need to replace words. Instead of ids we need to get real words
+        if word_set_data: # we need to replace ids with words
             words = []
             for word_id in word_set_data['words']:
                 word = Word.objects.get(pk=word_id)

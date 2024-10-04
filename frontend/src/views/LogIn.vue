@@ -21,6 +21,7 @@
 
                     <div class="notification is-danger" v-if="errors.length">
                         <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                        <!-- <p>something went wrong</p> -->
                     </div>
 
                     <div class="field">
@@ -64,7 +65,7 @@ export default {
             await axios
                 .post("/api/v1/authentication/login/", formData)
                 .then(response => {
-                    const token = response.data.data.token
+                    const token = response.data.access
                     this.$store.commit('setToken', token)
                     
                     axios.defaults.headers.common["Authorization"] = "Bearer " + token

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.response import Response
@@ -23,8 +23,21 @@ class LoginView(APIView):
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
-            username = serializer.validated_data['username']
+            email = serializer.validated_data.get('email')
+            username = serializer.validated_data.get('username')
             password = serializer.validated_data['password']
+
+            user = None
+
+            if email:
+                User = get_user_model()
+                try:
+                    user_obj = User.objects.get(email=email)
+                    username = user_obj.username
+                except User.DoesNotExist:
+                    return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+    
+
             user = authenticate(username=username, password=password)
 
             if user is not None:

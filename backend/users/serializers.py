@@ -18,5 +18,19 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    username = serializers.CharField(required=False, allow_blank=True)
+    email = serializers.EmailField(required=False, allow_blank=True)
     password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        email = data.get('email')
+        username = data.get('username')
+        password = data.get('password')
+        
+        if not email and not username:
+            raise serializers.ValidationError("Must include either 'username' or 'email'.")
+        
+        if not password:
+            raise serializers.ValidationError("Must include password.")
+        
+        return data

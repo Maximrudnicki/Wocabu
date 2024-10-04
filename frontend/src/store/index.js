@@ -96,11 +96,11 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` },
         };
         const response = await axios.get("/api/v1/vocab/", config);
-        if (response.data.data != null) {
-        response.data.data.sort((a, b) => {
+        if (response.data != null) {
+        response.data.sort((a, b) => {
           return b.created_at.seconds - a.created_at.seconds;
         });}
-        commit("setWords", response.data.data);
+        commit("setWords", response.data);
       } catch (error) {
         console.error(error);
       }
@@ -112,10 +112,10 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` },
         };
         const response = await axios.post("/api/v1/group/get_statistics", formData, config);
-        response.data.data.words.sort((a, b) => {
+        response.data.words.sort((a, b) => {
           return b.created_at.seconds - a.created_at.seconds;
         });        
-        return response.data.data;
+        return response.data;
       } catch (error) {
         console.error(error);
       }
@@ -127,7 +127,7 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` },
         };
         const response = await axios.get("/api/v1/group/find_teacher/", config);    
-        commit("setTeacherGroups", response.data.data);
+        commit("setTeacherGroups", response.data);
       } catch (error) {
         console.error(error);
       }
@@ -139,7 +139,7 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` },
         };
         const response = await axios.get("/api/v1/group/find_student/", config);    
-        commit("setStudentGroups", response.data.data);
+        commit("setStudentGroups", response.data);
       } catch (error) {
         console.error(error);
       }
@@ -151,7 +151,7 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` },
         };
         const response = await axios.post("/api/v1/group/find/", formData, config);    
-        commit("setGroup", response.data.data);
+        commit("setGroup", response.data);
       } catch (error) {
         console.error(error);
       }
@@ -163,8 +163,8 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` },
         };
         const response = await axios.post("/api/v1/group/find_student_info/", formData, config);    
-        commit("setStudent", response.data.data);
-        return response.data.data
+        commit("setStudent", response.data);
+        return response.data
       } catch (error) {
         console.error(error);
       }
@@ -176,8 +176,8 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` },
         };
         const response = await axios.post("/api/v1/group/find_teacher_info/", formData, config);    
-        commit("setTeacher", response.data.data);
-        return response.data.data
+        commit("setTeacher", response.data);
+        return response.data
       } catch (error) {
         console.error(error);
       }

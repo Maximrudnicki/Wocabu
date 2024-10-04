@@ -3,9 +3,6 @@
     <div @click="$router.push('/')">Pardo</div>
     <div class="navbar__btns">
       <button @click="$router.push('/')" class="action-button">Words</button>
-      <button style="margin-left: 20px" @click="$router.push('/groups')" class="action-button">
-        Groups
-      </button>
       <button style="margin-left: 20px" @click="$router.push('/training')" class="action-button">
         Training
       </button>
