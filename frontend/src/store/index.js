@@ -117,7 +117,7 @@ export default createStore({
           headers: { Authorization: `Bearer ${token}` },
         };
         const response = await axios.get(`/api/v1/sets/${setId}`, config);
-        commit("setSets", response.data);
+        commit("setSet", response.data);
       } catch (error) {
         console.error(error);
       }
