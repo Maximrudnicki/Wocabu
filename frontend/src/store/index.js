@@ -5,11 +5,8 @@ export default createStore({
   state: {
     language: "en-GB",
     words: [],
-    teacherGroups: [],
-    studentGroups: [],
-    student: null,
-    teacher: null,
-    group: null,
+    sets: [],
+    set: null,
     isAuthenticated: false,
     token: "",
     isLoading: false,
@@ -49,35 +46,23 @@ export default createStore({
     setWords(state, words) {
       state.words = words;
     },
-    setTeacherGroups(state, groups) {
-      state.teacherGroups = groups;
+    setSets(state, sets) {
+      state.sets = sets;
     },
-    setStudentGroups(state, groups) {
-      state.studentGroups = groups;
-    },
-    setGroup(state, group) {
-      state.group = group;
-    },
-    setStudent(state, student) {
-      state.student = student;
-    },
-    setTeacher(state, teacher) {
-      state.teacher = teacher;
+    setSet(state, set) {
+      state.set = set;
     },
     addWord(state, word) {
       state.words.push(word);
     },
-    addGroup(state, group) {
-      state.teacherGroups.push(group);
-    },
-    addToGroup(state, group) {
-      state.studentGroups.push(group);
+    addSet(state, set) {
+      state.sets.push(set);
     },
     deleteWord(state, wordId) {
       state.words = state.words.filter((word) => word.id !== wordId);
     },
-    deleteGroup(state, groupID) {
-      state.teacherGroups = state.teacherGroups.filter((group) => group.group_id !== groupID);
+    deleteSet(state, setId) {
+      state.sets = state.sets.filter((set) => set._id !== setId);
     },
     updateWord(state, updatedWord) {
       const index = state.words.findIndex(word => word.id === updatedWord.id);
@@ -109,6 +94,34 @@ export default createStore({
         console.error(error);
       }
     },
+    async fetchSets({ commit }) {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        const response = await axios.get("/api/v1/sets/", config);
+        if (response.data != null) {
+        response.data.sort((a, b) => {
+          return b.created_at.seconds - a.created_at.seconds;
+        });}
+        commit("setSets", response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async fetchSet({ commit }, setId) {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        const response = await axios.get(`/api/v1/sets/${setId}`, config);
+        commit("setSets", response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async addWord({ commit }, formData) {
       try {
         const token = localStorage.getItem("token");
@@ -122,6 +135,19 @@ export default createStore({
         console.error(error);
       }
     },
+    async addSet({ commit }, formData) {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        const response = await axios.post("/api/v1/sets/", formData, config);
+        const newSet = response.data;
+        commit("addSet", newSet);
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async deleteWord({ commit }, wordId) {
       try {
         const token = localStorage.getItem("token");
@@ -130,6 +156,18 @@ export default createStore({
         };
         await axios.delete(`/api/v1/vocab/${wordId}`, config);
         commit("deleteWord", wordId);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteSet({ commit }, setId) {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        await axios.delete(`/api/v1/sets/${setId}`, config);
+        commit("deleteSet", setId);
       } catch (error) {
         console.error(error);
       }

@@ -3,6 +3,9 @@
     <div @click="$router.push('/')">Wocabu</div>
     <div class="navbar__btns">
       <button @click="$router.push('/')" class="action-button">Words</button>
+      <button style="margin-left: 20px" @click="$router.push('/sets')" class="action-button">
+        Sets
+      </button>
       <button style="margin-left: 20px" @click="$router.push('/training')" class="action-button">
         Training
       </button>

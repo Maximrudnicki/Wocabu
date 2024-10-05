@@ -14,7 +14,7 @@
   export default {
     props: {
       show: Boolean,
-      setId: Number,
+      setId: String,
     },
   };
   </script>

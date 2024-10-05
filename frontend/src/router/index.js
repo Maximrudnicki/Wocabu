@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Words from '@/components/Words.vue'
+import Sets from '@/components/Sets.vue'
 import WordDetails from '@/components/modals/WordDetails.vue'
 import Training from '@/components/trainings/Training.vue'
 import AllTogether from '@/components/trainings/AllTogether.vue'
@@ -15,6 +16,11 @@ const routes = [
     path: '/',
     name: 'words',
     component: Words
+  },
+  {
+    path: '/sets',
+    name: 'sets',
+    component: Sets
   },
   {
     path: '/words/:id',
