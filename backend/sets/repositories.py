@@ -25,8 +25,11 @@ class WordSetRepository:
             if set:
                 words = []
                 for word_id in set['words']:
-                    word = Word.objects.get(pk=word_id)
-                    words.append(word.to_dict())
+                    try:
+                        word = Word.objects.get(pk=word_id)
+                        words.append(word.to_dict())
+                    except Word.DoesNotExist:
+                        continue
                 set['words'] = words
         return [WordSet.from_dict(word_set) for word_set in word_sets]
 
@@ -35,8 +38,11 @@ class WordSetRepository:
         if word_set_data: # we need to replace ids with words
             words = []
             for word_id in word_set_data['words']:
-                word = Word.objects.get(pk=word_id)
-                words.append(word.to_dict())
+                try:
+                    word = Word.objects.get(pk=word_id)
+                    words.append(word.to_dict())
+                except Word.DoesNotExist:
+                    continue
             word_set_data['words'] = words
             return WordSet.from_dict(word_set_data)
         return None
