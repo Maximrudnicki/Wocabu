@@ -125,7 +125,7 @@ class SetWords(APIView):
         if not word_id:
             return Response({"detail": "word_id is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        if word_id not in word_set.words:
+        if word_id not in [word['id'] for word in word_set.words]:
             return Response({"detail": "Word is missing from the set."}, status=status.HTTP_400_BAD_REQUEST)
 
         is_removed = self.repository.remove_word_from_set(id, word_id)

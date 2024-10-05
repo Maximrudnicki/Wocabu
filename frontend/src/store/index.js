@@ -64,6 +64,9 @@ export default createStore({
     deleteSet(state, setId) {
       state.sets = state.sets.filter((set) => set._id !== setId);
     },
+    removeWordFromSet(state, wordId) {
+      state.set.words = state.set.words.filter((set) => set.id !== wordId);
+    },
     updateWord(state, updatedWord) {
       const index = state.words.findIndex(word => word.id === updatedWord.id);
       if (index !== -1) {
@@ -168,6 +171,21 @@ export default createStore({
         };
         await axios.delete(`/api/v1/sets/${setId}`, config);
         commit("deleteSet", setId);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async removeWordFromSet({ commit }, formData) {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+          data: {
+            word_id: formData.wordId
+          }
+        };
+        await axios.delete(`/api/v1/sets/${formData.setId}/words`, config);
+        commit("removeWordFromSet", formData.wordId);
       } catch (error) {
         console.error(error);
       }

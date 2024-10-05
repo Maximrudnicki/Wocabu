@@ -7,7 +7,10 @@ from .models import WordSet
 
 connection_string = os.environ.get("MONGODB_STRING")
 client = MongoClient(connection_string)
-db = client['pardodb']
+
+db_name = os.environ.get("MONGODB_DB")
+db = client[db_name]
+
 word_sets_collection = db['word_sets']
 
 

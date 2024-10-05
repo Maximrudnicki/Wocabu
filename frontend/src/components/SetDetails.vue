@@ -4,7 +4,8 @@
     <router-link class="button" to="/sets/">Back</router-link>
     <div v-if="set">
       <p>
-        <strong style="font-size: 20px;">{{ set.name }}</strong> <span style="margin-left: 20px; font-size: 18px;">{{ set._id }}</span>
+        <strong style="font-size: 20px">{{ set.name }}</strong>
+        <span style="margin-left: 20px; font-size: 18px">{{ set._id }}</span>
       </p>
       <div class="words-list">
         <ul>
@@ -24,14 +25,14 @@
                 View
               </button>
               <button @click="confirmDeleteWord(word.id)" class="action-button">
-                Delete
+                Remove
               </button>
               <!-- <button class="action-button" @click="playSound(word.word)">📢</button> -->
             </div>
-            <DeleteWord
+            <RemoveFromSet
               :show="selectedWordId"
               :wordId="selectedWordId"
-              @delete="deleteWord"
+              @delete="removeWordFromSet(set._id)"
               @cancel="cancelDeleteWord"
             />
           </li>
@@ -43,12 +44,12 @@
 
 <script>
 import WordDetails from "./modals/WordDetails.vue";
-import DeleteWord from "./modals/DeleteWord.vue";
+import RemoveFromSet from "./modals/RemoveFromSet.vue";
 
 export default {
   components: {
     WordDetails,
-    DeleteWord,
+    RemoveFromSet,
   },
   data() {
     return {
@@ -73,8 +74,12 @@ export default {
     confirmDeleteWord(wordId) {
       this.selectedWordId = wordId;
     },
-    deleteWord() {
-      this.$store.dispatch("deleteWord", this.selectedWordId);
+    removeWordFromSet(setId) {
+      const formData = {
+        setId: setId,
+        wordId: this.selectedWordId
+      }
+      this.$store.dispatch("removeWordFromSet", formData);
       this.selectedWordId = null;
     },
     cancelDeleteWord() {
