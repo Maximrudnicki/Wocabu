@@ -3,7 +3,7 @@
     <p></p>
     <router-link class="button" to="/sets/">Back</router-link>
     <div v-if="set">
-      <p style="font-size: 16px;">
+      <p>
         <strong style="font-size: 20px;">{{ set.name }}</strong> <span style="margin-left: 20px; font-size: 18px;">{{ set._id }}</span>
       </p>
       <div class="words-list">

@@ -1,10 +1,12 @@
+import os
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 from vocab.models import Word
 from .models import WordSet
 
-client = MongoClient("mongodb://localhost:27017/")
+connection_string = os.environ.get("MONGODB_STRING")
+client = MongoClient(connection_string)
 db = client['pardodb']
 word_sets_collection = db['word_sets']
 
