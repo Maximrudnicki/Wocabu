@@ -92,7 +92,7 @@ form {
 
 input {
   width: 100%;
-  border: 2px solid teal;
+  border: 2px solid #007BFF;
   padding: 10px 15px;
   margin-top: 15px;
 }
@@ -121,18 +121,18 @@ button {
   margin-top: 15px;
   padding: 5px 10px;
   background-color: none;
-  color: teal;
-  border: 1px solid teal;
+  color: #007BFF;
+  border: 1px solid #007BFF;
 }
 
 .action-button {
   background-color: #fff;
   border: none;
-  color: teal;
+  color: #007BFF;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  border: 1px solid teal;
+  border: 1px solid #007BFF;
 }
 
 .action-button:hover {

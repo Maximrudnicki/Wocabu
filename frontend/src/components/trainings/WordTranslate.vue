@@ -201,21 +201,21 @@ li {
 .action-button {
   background-color: #fff;
   border: none;
-  color: teal;
+  color: #007BFF;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  border: 1px solid teal;
+  border: 1px solid #007BFF;
 }
 
 .button {
   background-color: #fff;
   border: none;
-  color: teal;
+  color: #007BFF;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  border: 1px solid teal;
+  border: 1px solid #007BFF;
   text-decoration: none;
 }
 

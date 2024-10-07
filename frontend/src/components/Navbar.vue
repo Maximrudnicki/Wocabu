@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <div @click="$router.push('/')">Wocabu</div>
+    <div @click="$router.push('/')" class="logo-text">Wocabu</div>
     <div class="navbar__btns">
       <button @click="$router.push('/')" class="action-button">Words</button>
       <button style="margin-left: 20px" @click="$router.push('/sets')" class="action-button">
@@ -40,21 +40,32 @@ export default {};
 button {
   padding: 5px 10px;
   background-color: none;
-  color: teal;
-  border: 1px solid teal;
+  color: #007BFF;
+  border: 1px solid #007BFF;
 }
 
 .action-button {
   background-color: #fff;
   border: none;
-  color: teal;
+  color: #007BFF;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  border: 1px solid teal;
+  border: 1px solid #007BFF;
 }
 
 .action-button:hover {
   background-color: #f0f0f0;
+}
+
+.logo-text {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #007BFF;
+  cursor: pointer;
+}
+
+.logo-text:hover {
+  color: #0056b3;
 }
 </style>
