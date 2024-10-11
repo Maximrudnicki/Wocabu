@@ -25,7 +25,6 @@ class SetSerializer(serializers.Serializer):
         word_set_repository = self.context["word_set_repository"]
         word_set_repository.update_word_set(instance.id, instance.to_dict())
         return instance
-    
 
 
 class CreateSetSerializer(serializers.Serializer):
@@ -41,5 +40,4 @@ class CreateSetSerializer(serializers.Serializer):
         return word_set_repository.create_word_set(word_set.name, word_set.user_id)
 
     class Meta:
-        fields = ("name")
-
+        fields = "name"
