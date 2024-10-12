@@ -1,4 +1,4 @@
-# vue_pardo
+# wocabu
 
 ## Project setup
 ```
