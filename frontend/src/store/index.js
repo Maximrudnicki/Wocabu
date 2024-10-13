@@ -151,19 +151,6 @@ export default createStore({
         console.error(error);
       }
     },
-    async addSet({ commit }, formData) {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.post("/api/v1/sets/", formData, config);
-        const newSet = response.data;
-        commit("addSet", newSet);
-      } catch (error) {
-        console.error(error);
-      }
-    },
     async addToSet({ commit }, formData) {
       try {
         const token = localStorage.getItem("token");
@@ -176,6 +163,18 @@ export default createStore({
         await axios.post(`/api/v1/sets/${formData.setId}/words`, req, config);
         const response = await axios.get(`/api/v1/sets/${formData.setId}`, config);
         commit("setSet", response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteWord({ commit }, wordId) {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        await axios.delete(`/api/v1/vocab/${wordId}`, config);
+        commit("deleteWord", wordId);
       } catch (error) {
         console.error(error);
       }
