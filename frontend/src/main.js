@@ -6,7 +6,7 @@ import directives from '@/directives';
 import store from './store'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000'
+axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL;
 
 const app = createApp(App)
 
