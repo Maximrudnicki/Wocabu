@@ -1,1 +1,3 @@
 *.pem
+*.yaml
+k8s.md
